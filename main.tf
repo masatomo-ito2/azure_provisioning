@@ -18,21 +18,21 @@ resource "azurerm_subnet" "subnet" {
   name                 = "internal"
   resource_group_name  = azurerm_resource_group.masa-rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = [ "10.0.2.0/24" ]
+  address_prefixes     = ["10.0.2.0/24"]
 }
 
 resource "azurerm_public_ip" "public_ip" {
-	name = "consul-ip"
-	location = azurerm_resource_group.masa-rg.location
-	resource_group_name = azurerm_resource_group.masa-rg.name
-	allocation_method = "Static"
-	domain_name_label = "masa"
-	idle_timeout_in_minutes = 30
-	
-	tags = {
-		environment = "consul test"
-		Owner = "masa@hashicorp.com"
-	}
+  name                    = "consul-ip"
+  location                = azurerm_resource_group.masa-rg.location
+  resource_group_name     = azurerm_resource_group.masa-rg.name
+  allocation_method       = "Static"
+  domain_name_label       = "masa"
+  idle_timeout_in_minutes = 30
+
+  tags = {
+    environment = "consul test"
+    Owner       = "masa@hashicorp.com"
+  }
 }
 
 resource "azurerm_network_interface" "nic" {
@@ -44,8 +44,8 @@ resource "azurerm_network_interface" "nic" {
     name                          = "consul-test"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Static"
-    private_ip_address = "10.0.2.5"
-		public_ip_address_id = azurerm_public_ip.public_ip.id
+    private_ip_address            = "10.0.2.5"
+    public_ip_address_id          = azurerm_public_ip.public_ip.id
   }
 }
 
@@ -83,7 +83,7 @@ data "azurerm_public_ip" "public_ip" {
 }
 
 output "public_ip" {
-	value = <<EOF
+  value = <<EOF
 
 Data from azurerm_public_ip
 	Public IP: ${data.azurerm_public_ip.public_ip.ip_address}
